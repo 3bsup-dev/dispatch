@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Mail;
 class Email
 {
 //=============================[fila do despacho]====================================
-    public function queue_position($info){
-        Mail::to(session('email'))->send(new Dispatch($info));
+    public function queue_dispatch($info){
+        Mail::to( $info->user->email)->send(new Dispatch($info));
     }
 //=============================[Info_login]====================================
     public function info_login($info){

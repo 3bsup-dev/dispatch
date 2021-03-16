@@ -42,7 +42,21 @@ class Dispatches extends Controller
 
         ];
 
-         return view('admin',$dados);
+        $i=0;
+        foreach($dispatch as $dispatch){
+            $i= $i; $i++;
+            if(!empty($dispatch->user->email) && $dispatch->notification == 1 && $i <= 2){
+                    // if($i != session($dispatch->user->login.'queue') || $dispatch->status == 1 ){
+                    //      if($dispatch->status == 1){
+                    //          $dispatch->notification = 2;
+                    //          $dispatch->save();
+                    //      }
+                    $this->Email->queue_dispatch($dispatch);
+                  //  }
+            }
+            session([$dispatch->user->login.'queue' => $i]);
+        }
+         return view('mail.dispatch',$dados);
       }
 
 
@@ -73,17 +87,7 @@ public function panel(){
         'title'    => 'Despacho - Home',
     ];
 
-    if(!empty(session('email')) && $dispatch[0]->notification == 1 && $fila <= 3 && $fila == session('fila')){
-        $info = [
-            'dispatch' => $dispatch,
-            'fila' => $fila,
-        ];
-
-        echo 'email sendo enviado';
-        #$this->Email->queue_position($info);
-    }else{ echo 'email nao sendo enviado';}
-
-    //return view('user_panel',$dados);
+    return view('user_panel',$dados);
 }
 //=============================[action_dispatch]============================
       public function action_dispatch($id_dispatch,$action){
