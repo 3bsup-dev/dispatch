@@ -57,7 +57,7 @@
                                 @csrf
                                 <textarea placeholder="Assunto:" class="subject-dispatch fs-18" name="descripition" id="descripition"></textarea>
                                 <div class="notification">
-                                    <input class="form-check-input" type="checkbox" value="1" id="notification" name="notification" checked>
+                                    <input checked class="form-check-input" type="checkbox" value="1" id="notification" name="notification" >
                                     <label class="form-check-label m-l-10" for="notification">
                                        Receber notificações via e-mail
                                     </label>

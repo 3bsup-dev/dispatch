@@ -103,6 +103,7 @@ class Users extends Controller
                 'email' => $email,
                 'login' => $login,
                 'password' => $password,
+                'name' => $name,
             ];
             $this->Email->info_login($info);
         }
@@ -280,6 +281,7 @@ class Users extends Controller
             $profile = session('profile');
         }
         $login = '3bsup-'.str_replace(' ', '',strtolower($request->input('login')));
+        $notification = $request->input('notification');
 
 
     $info_user = User::find($user_id);
@@ -306,6 +308,7 @@ class Users extends Controller
         $info_user->email = $email;
         $info_user->profile = $profile;
         $info_user->login = $login;
+        $info_user->notification = $notification;
         $info_user->save();
         if (empty($request->input('user_id'))){
             session()->put([

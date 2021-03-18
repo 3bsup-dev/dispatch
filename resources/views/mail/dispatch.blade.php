@@ -95,24 +95,26 @@
                                                     <tr>
 
 
-<td align="center" width="50%" class="100p"><img src="https://nsmlzz.stripocdn.email/content/guids/7fa4a66e-055c-4560-8b07-3b6257cadf15/images/56721615841889101.png" width="100" height="117" />
-                                                    </td></tr>
+</tr>
                                                 </table>
                                                 <table border="0" cellspacing="0" cellpadding="0" width="600" class="100p">
                                                     <tr>
                                                         <td height="35"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td align="center" style="color:#FFFFFF; font-size:24px;">
-                                                            <font face="'Roboto', Arial, sans-serif">
-                                                                <span style="font-size:44px;">3º Batalhão de Suprimento</span><br />
+
+                                                        <td  width="402" align="center" style="color:#FFFFFF; font-size:24px;">
+                                                            <font face="'Roboto', Arial, sans-serif"><img align="center" src="https://nsmlzz.stripocdn.email/content/guids/7fa4a66e-055c-4560-8b07-3b6257cadf15/images/56721615841889101.png" width="100" height="117" />
+                                                                <br />
+                                                                <br />
+                                                                <span style="font-size:30px;">3º Batalhão de Suprimento</span><br />
                                                                 <span style="font-size:24px;">Batalhão Marechal Bitencourt</span>
                                                                 <br /><br />
 
                                                                 <a href="##" style="color:#FFFFFF; text-decoration:none;">
                                                                 </a></font><table border="0" cellspacing="0" cellpadding="10" style="border:2px solid #FFFFFF;">
                                                                     <tr>
-                                                                        <td align="center" style="color:#FFFFFF; font-size:16px;"><font face="'Roboto', Arial, sans-serif"><a href="##" style="color:#FFFFFF; text-decoration:none;">IR PARA DESPACHO</a></font></td>
+                                                                        <td align="center" style="color:#FFFFFF; font-size:16px;"><font face="'Roboto', Arial, sans-serif"><a href="http://despacho.3bsup.eb.mil.br" style="color:#FFFFFF; text-decoration:none;">IR PARA DESPACHO</a></font></td>
                                                                     </tr>
                                                                 </table>
 
@@ -131,56 +133,55 @@
                     </td>
                 </tr>
             </table>
-            <table style="border-bottom: 2px solid #fff200" width="640" border="0" cellspacing="0" cellpadding="20" bgcolor="#4d4d4d" class="100p">
+            <table style="border-bottom: 2px solid #fff200" width="640" border="0" cellspacing="0" cellpadding="10" bgcolor="#4d4d4d" class="100p">
                 <tr>
-                    <td align="center" style="font-size:24px; color:#FFFFFF;"><font face="'Roboto', Arial, sans-serif">FILA DE DESPACHO</font></td>
+                    <td align="left"  width="100" ><img src="https://nsmlzz.stripocdn.email/content/guids/CABINET_3d8d4b950214f4b9605a98488ea8b2a9/images/611616028254522.png" alt style="display: block;" width="60"></td>
+                    <td align="center"   width="202" style="font-size:15px; color:#FFFFFF;"><font face="'Roboto', Arial, sans-serif">FILA DE DESPACHO</font></td>
+                    <td align="right"  width="100"><img src="https://nsmlzz.stripocdn.email/content/guids/CABINET_3d8d4b950214f4b9605a98488ea8b2a9/images/68911615935689966.png" alt style="display: block;" width="60"></td>
                 </tr>
             </table>
-            <table width="640" border="0" cellspacing="0" cellpadding="20" class="100p" bgcolor="#FFFFFF">
+            <table  width="640" border="0" cellspacing="0" cellpadding="20"  class="100p">
                 <tr>
-                    <td align="center" valign="top">
-
+                    <td align="center"  width="402" style="font-size:16px; color:#ffffff;">
                     </td>
                 </tr>
             </table>
-            <table width="640" border="0" cellspacing="0" cellpadding="20" bgcolor="#ffffff" class="100p">
+            <table width="640" border="0" cellspacing="0" cellpadding="10" bgcolor="#ffffff" class="100p">
                 <tr>
-                    <td align="center" style="font-size:16px; color:#848484;"><font face="'Roboto', Arial, sans-serif"><span style="color:#2a8e9d; font-size:24px;">Prezado Sr(a). (Nomedeguerra)</span><br />
-                        <br />
-                        <span style="font-size:16px;">Todos os recursos que você precisa. Pelo melhor preço.</span></font>
+                    <td align="center"  width="402" style="font-size:16px; color:#848484;"><font face="'Roboto', Arial, sans-serif"><span style="color:#2a9d47; font-size:24px;">Prezado Sr(a). {{ $info->user->name }}</span>
+                        </font>
                     </td>
                 </tr>
             </table>
             <table width="640" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
                 <tr>
-                    <td align="center"><img src="http://tassets.mailee.me/mailee/testehtmltemplate2/pc_tela_print.jpg" width="402" height="255" /></td>
-                </tr>
-            </table>
-            <table width="640" border="0" cellspacing="0" cellpadding="20" bgcolor="#2a8e9d" class="100p">
-                <tr>
-                    <td align="center" style="font-size:16px; color:#ffffff;"><font face="'Roboto', Arial, sans-serif"><span style="font-size:24px;">VOCÊ VAI AMAR O NOSSO PRODUTO</span><br />
-                        <br />
-                        <span style="font-size:16px;">Apresente seu produto aqui.</span></font>
+                    <td align="center"  width="402" style="font-size:20px; color:#000;"><font face="'Roboto', Arial, sans-serif">
+                       @if ($info->status == 0)
+                        Sr(a) é o proximo(a) a despachar, e em breve será chamado.
+                       @elseif ($info->status == 1)
+                        É a sua vez de despachar, dirija-se a sala do comandante.
+                       @endif
+                       <br>
+                       <br>
+                       ASSUNTO: {{ $info->descripition }}
+                        </font>
                     </td>
                 </tr>
             </table>
-
-            <table width="640" border="0" cellspacing="0" cellpadding="20" bgcolor="#ffffff" class="100p">
+            <table  width="640" border="0" cellspacing="0" cellpadding="20"  class="100p">
                 <tr>
-                    <td align="left" width="50%" style="font-size:14px; color:#848484;"><font face="'Roboto', Arial, sans-serif">&copy; MAILEE ©2016</font></td>
-                    <td align="right" width="50%" style="font-size:14px; color:#848484;"><font face="'Roboto', Arial, sans-serif">Se preferir não receber nossos emails,<br />
-                        clique aqui</font></td>
+                    <td align="center"  width="402" style="font-size:16px; color:#ffffff;">
+                    </td>
                 </tr>
             </table>
-
-            <table width="640" border="0" cellspacing="0" cellpadding="20" bgcolor="#ffffff" class="100p">
+            <table style="border-top: 2px solid #fff200" width="640" border="0" cellspacing="0" cellpadding="20" bgcolor="#000" class="100p">
                 <tr>
-
-
-                    <td align="right" width="50%" style="font-size:14px; color:#848484;"> <div align="center"><img src="http://tassets.mailee.me/mailee/testehtmltemplate2/instagram.jpg" width="30" height="30" /><img src="http://tassets.mailee.me/mailee/testehtmltemplate2/twitter.jpg" width="30" height="30" /><img src="http://tassets.mailee.me/mailee/testehtmltemplate2/facebook.jpg" width="30" height="30" />
-                </div></td></tr>
+                    <td align="center" height="120"  width="402" style="font-size:16px; color:#ffffff;"><font face="'Roboto', Arial, sans-serif"><span style="font-size:16px;">&copy;3º B Sup - 2021</span>
+                        <br />
+                        <span style="font-size:16px;">Desenvolvido por: Sgt Souza Lima e Cb Eduardo</span></font>
+                    </td>
+                </tr>
             </table>
-
             <table width="640" class="100p" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td height="50">

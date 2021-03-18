@@ -42,21 +42,24 @@ class Dispatches extends Controller
 
         ];
 
-        $i=0;
+        $i = 0;
         foreach($dispatch as $dispatch){
             $i= $i; $i++;
-            if(!empty($dispatch->user->email) && $dispatch->notification == 1 && $i <= 2){
-                    // if($i != session($dispatch->user->login.'queue') || $dispatch->status == 1 ){
-                    //      if($dispatch->status == 1){
-                    //          $dispatch->notification = 2;
-                    //          $dispatch->save();
-                    //      }
-                    $this->Email->queue_dispatch($dispatch);
-                  //  }
+
+            if($dispatch->notification == 0 && $dispatch->status == 0){session()->put('queue', 1);}
+            if($i <= 2 && !empty($dispatch->user->email) && $dispatch->notification == 1 && $dispatch->status == 0 &&  session('queue') != 1){
+                $dispatch->notification = 2;
+                $dispatch->save();
+                $this->Email->queue_dispatch($dispatch);
             }
-            session([$dispatch->user->login.'queue' => $i]);
+            if(!empty($dispatch->user->email) && $dispatch->status == 1 && $dispatch->notification >= 1 && $dispatch->notification < 3){
+                    $dispatch->notification = 3;
+                    $dispatch->save();
+                    $this->Email->queue_dispatch($dispatch);
+                    session()->put('queue', 0);
+            }
         }
-         return view('mail.dispatch',$dados);
+        return view('admin',$dados);
       }
 
 
@@ -113,10 +116,14 @@ public function panel(){
         $dispatch = Dispatch::find($id_dispatch);
 
         if($action == 1 || $action == 2){
+            session()->forget('queue');
             $dispatch->status = $action;
             $dispatch->save();
         }elseif($action == 3){
             $dispatch->delete();
+            if($dispatch->status == 0){
+                session()->forget('queue');
+            }
         }elseif($action == 4){
             $dispatch->delete();
         }elseif($action == 6){
@@ -218,10 +225,12 @@ public function panel(){
         }
         $request->validated();
         $descripition = $request->input('descripition');
+        $notification = $request->input('notification');
 
         $dispatch = new Dispatch;
         $dispatch->user_id = session('user_id');
         $dispatch->descripition = $descripition;
+        $dispatch->notification = $notification;
         $dispatch->status = 0;
         $dispatch->save();
 

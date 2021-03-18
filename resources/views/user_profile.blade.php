@@ -99,6 +99,15 @@
                                     <input disabled class="input has-val" type="email" @if(isset($info_user->email))value="{{ $info_user->email }}" @else placeholder="Cadastre seu email e receba notificações" @endif name="email" id="email">
                                     <span class="focus-input" data-placeholder="Email"></span>
                                 </div>
+                                   <!--profile-->
+                                <div class="wrap-input">
+                                    <select  disabled required class="input has-val" name="notification" id="notification">
+                                        <option value=""></option>
+                                        <option @if($info_user->notification == "1") selected="selected" @endif value="1" >Sim</option>
+                                        <option @if($info_user->notification == "0") selected="selected" @endif value="0">Não</option>
+                                    </select>
+                                    <span class="focus-input" data-placeholder="Deseja receber notificações via e-mail?"></span>
+                                </div>
                                 <div id="btn-submit"></div>
                         </form>
 
