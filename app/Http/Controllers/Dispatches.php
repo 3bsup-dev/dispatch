@@ -45,7 +45,6 @@ class Dispatches extends Controller
         $i = 0;
         foreach($dispatch as $dispatch){
             $i= $i; $i++;
-
             if($dispatch->notification == 0 && $dispatch->status == 0){session()->put('queue', 1);}
             if($i <= 2 && !empty($dispatch->user->email) && $dispatch->notification == 1 && $dispatch->status == 0 &&  session('queue') != 1){
                 $dispatch->notification = 2;
@@ -61,6 +60,7 @@ class Dispatches extends Controller
         }
         return view('admin',$dados);
       }
+
 
 
 //=============================[panel_user]=================================

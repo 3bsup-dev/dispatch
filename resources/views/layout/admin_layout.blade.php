@@ -91,6 +91,10 @@
                         <p class="c-b">Cancelar despachos?</p>
                         <input type="radio" name="clean" id="clean" value="1" /> Sim
                         <input  type="radio" name="clean" id="clean" value="2" checked/> Não
+
+                        <p class="c-b">Notificar via e-mail?</p>
+                        <input type="radio" name="clean" id="notification" value="1" checked/> Sim
+                        <input  type="radio" name="clean" id="notification" value="0" /> Não
                     </div>
 
                 </div>

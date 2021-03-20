@@ -2,21 +2,33 @@
 
 namespace App\Classes;
 
-use App\Mail\InfoLogin;
-use App\Mail\Dispatch;
+use App\Mail\InfoLoginMail;
+use App\Mail\DispatchMail;
+use App\Mail\WarningMail;
+use App\Models\Warning;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
 class Email
 {
 //=============================[fila do despacho]====================================
     public function queue_dispatch($info){
-        Mail::to( $info->user->email)->send(new Dispatch($info));
+        Mail::to( $info->user->email)->send(new DispatchMail($info));
     }
-//=============================[Info_login]====================================
+//=============================[Info_login]==========================================
     public function info_login($info){
-        Mail::to($info['email'])->send(new InfoLogin($info));
-}
-//=============================[]======================================
+        Mail::to($info['email'])->send(new InfoLoginMail($info));
+    }
+//=============================[Warning]=============================================
+    public function warnings($info){
+        $users = User::where('notification', 1)->get();
+            foreach($users as $user){
+                if (!empty($user->email)) {
+                    $info['name'] = $user->name;
+                    Mail::to($user->email)->send(new WarningMail($info));
+                }
+            }
+    }
 //=============================[]======================================
 //=============================[]======================================
 //=============================[]======================================

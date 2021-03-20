@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class InfoLogin extends Mailable
+class WarningMail extends Mailable
 {
 
     use Queueable, SerializesModels;
@@ -21,7 +21,7 @@ class InfoLogin extends Mailable
 
     public function build()
     {
-        return $this->subject('Informações de login')
-                    ->view('mail.info_login');
+        return $this->subject('Aviso do comandante')
+                    ->view('mail.warning');
     }
 }

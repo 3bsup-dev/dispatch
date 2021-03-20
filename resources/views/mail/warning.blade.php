@@ -136,7 +136,7 @@
             <table style="border-bottom: 2px solid #fff200" width="640" border="0" cellspacing="0" cellpadding="10" bgcolor="#4d4d4d" class="100p">
                 <tr>
                     <td align="left"  width="100" ><img src="https://nsmlzz.stripocdn.email/content/guids/CABINET_3d8d4b950214f4b9605a98488ea8b2a9/images/611616028254522.png" alt style="display: block;" width="60"></td>
-                    <td align="center"   width="202" style="font-size:15px; color:#FFFFFF;"><font face="'Roboto', Arial, sans-serif">FILA DE DESPACHO</font></td>
+                    <td align="center"   width="202" style="font-size:15px; color:#FFFFFF;"><font face="'Roboto', Arial, sans-serif">AVISO DO COMANDANTE</font></td>
                     <td align="right"  width="100"><img src="https://nsmlzz.stripocdn.email/content/guids/CABINET_3d8d4b950214f4b9605a98488ea8b2a9/images/68911615935689966.png" alt style="display: block;" width="60"></td>
                 </tr>
             </table>
@@ -148,7 +148,7 @@
             </table>
             <table width="640" border="0" cellspacing="0" cellpadding="10" bgcolor="#ffffff" class="100p">
                 <tr>
-                    <td align="center"  width="402" style="font-size:16px; color:#848484;"><font face="'Roboto', Arial, sans-serif"><span style="color:#2a9d47; font-size:24px;">Prezado(a) Sr(a). {{ $info->user->name }}</span>
+                    <td align="center"  width="402" style="font-size:16px; color:#848484;"><font face="'Roboto', Arial, sans-serif"><span style="color:#2a9d47; font-size:24px;">Prezado(a) Sr(a). {{ $info['name'] }}</span>
                         </font>
                     </td>
                 </tr>
@@ -156,16 +156,27 @@
             <table width="640" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
                 <tr>
                     <td align="center"  width="402" style="font-size:20px; color:#000;"><font face="'Roboto', Arial, sans-serif">
-                       @if ($info->status == 0)
-                        Sr(a) é o proximo(a) a despachar, e em breve será chamado.
-                       @elseif ($info->status == 1)
-                        É a sua vez de despachar, dirija-se a sala do comandante.
-                       @endif
-                       <br>
-                       <br>
-                       ASSUNTO: {{ $info->descripition }}
+                       <strong>Aviso:</strong><br> {{ $info['warning'] }}
                         </font>
                     </td>
+                </tr>
+            </table>
+            <br><br>
+            <table width="640" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" class="100p">
+                <tr>
+                    <td align="left"  width="402" style="font-size:20px; color:#000;"><font face="'Roboto', Arial, sans-serif">
+                        <strong>Informações:</strong><br>
+                        @if ($info['clean'] == 2 && $info['status'] == 1)
+                            O comandante não está recebendo despacho no momento.<br>
+                            As solicitações que haviam não foram canceladas.
+                        @elseif ($info['clean'] == 1 && $info['status'] == 1)
+                            O comandante não está recebendo despacho no momento.<br>
+                            Todas as solicitações que haviam foram canceladas.
+                        @elseif ($info['clean'] == 2 && $info['status'] == 2)
+                            O comandante está recebendo despacho no momento.
+                        @endif
+                         </font>
+                     </td>
                 </tr>
             </table>
             <table  width="640" border="0" cellspacing="0" cellpadding="20"  class="100p">
