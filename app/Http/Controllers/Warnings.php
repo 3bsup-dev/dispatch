@@ -17,7 +17,6 @@ class Warnings extends Controller
     {
         $this->Email = new Email();
     }
-
 //=======================[status_dispatch]===========================================
     public function status_dispatch($status_dispatch){
 

@@ -316,14 +316,23 @@ margin: 80px 50px;
     margin-top: 20px;
     width: 80%;
     height: 220px;
-    border:1px solid #969696 ;
+    border:1px solid#adadad ;
     border-radius: 10px;
 }
 
-textarea:focus {
+.textarea {
     outline: none;
-    border:2px solid #969696 ;
-    box-shadow: 0 0 5px #000000;
+    border:2px solid#adadad ;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.textarea:focus {
+    outline: none;
+    border:2px solid #d0ff00 ;
+    box-shadow: 0 0 5px #076e0f;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .notification {

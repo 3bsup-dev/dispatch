@@ -34,6 +34,7 @@ class Users extends Controller
         }
 
         $list_users = User::withTrashed()->get();
+        $users = User::where('profile', 0)->orderBy('name')->get();
 
         $info_new_user = [];
         if(!empty(session('new_user')['login'])){
@@ -49,6 +50,7 @@ class Users extends Controller
             'info_user' => $info_new_user,
             'list_users' => $list_users,
             'title'    => 'Despacho - Usuários',
+            'users' => $users,
         ];
 
         return view('users' ,$dados);

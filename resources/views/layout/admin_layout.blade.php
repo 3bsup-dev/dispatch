@@ -81,7 +81,7 @@
             <div class="c-b modal-body">
                 <form action="{{ route('warning') }}" method="POST">
                     @csrf
-                    <textarea maxlength="250" placeholder="Digite o aviso..." name="warning" id="warning" cols="55" rows="10"> @if (isset($status->warning)) {{ $status->warning }} @endif</textarea>
+                    <textarea class="textarea" maxlength="250" placeholder="Digite o aviso..." name="warning" id="warning" cols="55" rows="10"> @if (isset($status->warning)) {{ $status->warning }} @endif</textarea>
 
                     <div class="d-inline-block">
                         <p class="c-b">Aceitando despacho?</p>

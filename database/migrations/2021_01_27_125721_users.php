@@ -15,6 +15,7 @@ class Users extends Migration
             $table->string('pg', 4);
             $table->string('name', 50);
             $table->string('email', 80)->nullable();
+            $table->tinyInteger('notification')->nullable()->default(0);
             $table->string('section',50);
             $table->string('login', 50);
             $table->string('password', 200);

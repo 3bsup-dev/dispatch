@@ -208,6 +208,10 @@ public function panel(){
      return redirect()->route('trash_dispatch');
   }
 
+//=============================[require_dispatch]===========================
+    public function require_dispatch(){
+
+    }
 //=============================[request_dispatch]===========================
     public function request_dispatch(ReqDispatchRequest $request){
          //Verifica se o usuário esta logado

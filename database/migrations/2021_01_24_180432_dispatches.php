@@ -14,6 +14,7 @@ class Dispatches extends Migration
             $table->integer('user_id');//Posto ou Graduação do usuario
             $table->string('descripition', 255);//Descrição do despacho
             $table->tinyInteger('status');//Status do despacho
+            $table->tinyInteger('notification')->nullable()->default(0);
             $table->timestamps();//Cria 2 colunas, created_at e updated_at
             $table->softDeletes();//Cria a coluna deleted_at
         });
