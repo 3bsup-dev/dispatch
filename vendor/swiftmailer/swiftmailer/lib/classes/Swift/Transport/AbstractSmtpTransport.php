@@ -445,7 +445,7 @@ abstract class Swift_Transport_AbstractSmtpTransport implements Swift_Transport
     protected function assertResponseCode($response, $wanted)
     {
         if (!$response) {
-           return redirect()->route('admin',['error' => 'email não enviado']);
+            $this->throwException(new Swift_TransportException('Expected response code '.implode('/', $wanted).' but got an empty response'));
         }
 
         list($code) = sscanf($response, '%3d');
