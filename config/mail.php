@@ -39,8 +39,8 @@ return [
             'host' => 'smtp.1cta.eb.mil.br',
             'port' => 587,
             'encryption' => 'TLS',
-            'username' => 'cmt@3bsup.eb.mil.br',
-            'password' => '0023Cwra',
+            'username' => 'eduardom@3bsup.eb.mil.br',
+            'password' => 'Eduardo3386',
             'timeout' => null,
             'auth_mode' => null,
         ],
@@ -58,7 +58,7 @@ return [
     */
 
     'from' => [
-        'address' => 'cmt@3bsup.eb.mil.br',
+        'address' => 'eduardom@3bsup.eb.mil.br',
         'name' => 'Despacho - 3º B Sup',
     ],
 

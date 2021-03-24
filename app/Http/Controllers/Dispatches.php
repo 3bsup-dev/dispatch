@@ -9,7 +9,7 @@ use App\Models\Warning;
 use App\Classes\Email;
 use App\Http\Requests\ReqDispatchCmtRequest;
 use App\Models\Request;
-
+use App\Models\User;
 
 class Dispatches extends Controller
 {
@@ -33,14 +33,15 @@ class Dispatches extends Controller
 
         $dispatch = Dispatch::where('status','<=', 1)->with('user')->orderBy('created_at','asc')->get();
         $status = Warning::all()->first();
+        $users = User::where('profile', 0)->orderBy('name')->get();
+
 
          $dados = [
             'erro' => session('erro'),
             'status'   => $status,
             'dispatch' => $dispatch,
             'title'    => 'Despacho - Administrador',
-
-
+            'users' => $users,
         ];
 
         $i = 0;
@@ -222,7 +223,7 @@ public function panel(){
             ];
             $this->Email->cmt_message($info);
         }
-        session()->flash('erro','Requerimento enviado com sucesso');
+        session()->flash('erro','Requerimento enviado com sucesso+');
 
         return back();
     }
