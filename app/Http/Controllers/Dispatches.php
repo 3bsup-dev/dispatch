@@ -7,7 +7,8 @@ use App\Http\Requests\ReqDispatchRequest;
 use App\Models\Dispatch;
 use App\Models\Warning;
 use App\Classes\Email;
-use Illuminate\Http\Request;
+use App\Http\Requests\ReqDispatchCmtRequest;
+use App\Models\Request;
 
 
 class Dispatches extends Controller
@@ -132,16 +133,7 @@ public function panel(){
             $restore->save();
         }
 
-        if ($action == 4) {
-           return redirect()->route('history_dispatch');
-        }elseif ($action == 6) {
-            return redirect()->route('trash_dispatch');
-        }else {
-           return redirect()->route('admin');
-        }
-
-
-
+        return back();
       }
 //=============================[Historico]==================================
     public function history_dispatch(){
@@ -205,12 +197,34 @@ public function panel(){
 
     }
 
-     return redirect()->route('trash_dispatch');
+    return back();
   }
 
 //=============================[require_dispatch]===========================
-    public function require_dispatch(){
+    public function require_dispatch(ReqDispatchCmtRequest $request){
+        $user    = $request->input('user');
+        $message = $request->input('message');
+        $email   = $request->input('email');
+        if(empty($email)){
+            $email = 0;
+        }
 
+        $require = new Request;
+        $require->user_id = $user;
+        $require->message = $message;
+        $require->status = 0;
+        $require->save();
+
+        if($email == 1){
+            $info = [
+                'message' => $message,
+                'user' => $user,
+            ];
+            $this->Email->cmt_message($info);
+        }
+        session()->flash('erro','Requerimento enviado com sucesso');
+
+        return back();
     }
 //=============================[request_dispatch]===========================
     public function request_dispatch(ReqDispatchRequest $request){
@@ -230,6 +244,9 @@ public function panel(){
         $request->validated();
         $descripition = $request->input('descripition');
         $notification = $request->input('notification');
+        if(empty($notification)){
+            $notification = 0;
+        }
 
         $dispatch = new Dispatch;
         $dispatch->user_id = session('user_id');

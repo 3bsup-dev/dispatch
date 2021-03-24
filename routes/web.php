@@ -38,6 +38,7 @@ Route::get('/action_dispatch/{id_dispatch}/{action}',[Dispatches::class, 'action
 Route::get('/admin/history', [Dispatches::class, 'history_dispatch'])->name('history_dispatch');
 Route::get('/admin/trash', [Dispatches::class, 'trash_dispatch'])->name('trash_dispatch');
 Route::get('/admin/trash/clean', [Dispatches::class, 'clean_trash'])->name('clean_trash');
+Route::post('/require_dispatch', [Dispatches::class, 'require_dispatch'])->name('require_dispatch');
 
 //============================[Rota de teste]====================================
 //Route::get('/mail', [Dispatches::class, 'mail'])->name('mail');

@@ -55,7 +55,7 @@
                             <h1>SOLICITAR DESPACHO</h1>
                             <form action="{{ route('request_dispatch') }}" method="POST">
                                 @csrf
-                                <textarea placeholder="Assunto:" class="subject-dispatch fs-18" name="descripition" id="descripition"></textarea>
+                                <textarea  placeholder="Assunto:" class="textarea subject-dispatch fs-18" name="descripition" id="descripition"></textarea>
                                 <div class="notification">
                                     <input checked class="form-check-input" type="checkbox" value="1" id="notification" name="notification" >
                                     <label class="form-check-label m-l-10" for="notification">

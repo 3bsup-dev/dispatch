@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 
+use App\Mail\CmtReqDispatchMail;
 use App\Mail\InfoLoginMail;
 use App\Mail\DispatchMail;
 use App\Mail\WarningMail;
@@ -29,7 +30,14 @@ class Email
                 }
             }
     }
-//=============================[]======================================
+//=============================[Cmt Request Dispatch]=================================
+    public function cmt_message($info){
+        $user = User::find($info['user']);
+            if (!empty($user->email && $user->notification == 1)) {
+                $info['name'] = $user->name;
+                Mail::to($user->email)->send(new CmtReqDispatchMail($info));
+            }
+    }
 //=============================[]======================================
 //=============================[]======================================
 //=============================[]======================================

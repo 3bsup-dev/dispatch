@@ -86,11 +86,11 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                 <div class="c-b modal-body">
-            <form action="#" method="POST">
+            <form action="{{ route('require_dispatch') }}" method="POST">
                 @csrf
                  <!--usuario-->
                  <div class="wrap-input">
-                    <select required class="input" name="usuario" id="usuario">
+                    <select required class="input" name="user" id="user">
                         <option value=""></option>
                         @foreach ( $users as $user )
                             <option value="{{  $user->id }}" >{{ $user->pg }} {{ $user->name }}</option>
@@ -100,12 +100,12 @@
                 </div>
 
                 <!--nome guerra-->
-                <textarea required class="textarea" maxlength="250" placeholder="Digite o aviso..." name="warning" id="warning" cols="30" rows="5"></textarea>
+                <textarea required class="textarea" maxlength="250" placeholder="Digite a mensagem..." name="message" id="message" cols="30" rows="5"></textarea>
 
             </div>
                 <div class="footer-modal-c-users">
                     <div class="float-l p-t-10  form-check">
-                        <input checked class="p-r-10 form-check-input" type="checkbox" value="yes" name="email" id="email">
+                        <input checked class="p-r-10 form-check-input" type="checkbox" value="1" name="email" id="email">
                         <label class="form-check-label c-b" for="send_info">
                             Enviar via e-mail
                         </label>

@@ -324,7 +324,7 @@ margin: 80px 50px;
     outline: none;
     border:2px solid#adadad ;
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
 }
 
 .textarea:focus {
@@ -332,7 +332,7 @@ margin: 80px 50px;
     border:2px solid #d0ff00 ;
     box-shadow: 0 0 5px #076e0f;
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
 }
 
 .notification {
