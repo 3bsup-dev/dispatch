@@ -311,9 +311,18 @@ public function panel(){
         $user_id = session('user_id');
         $dispatch = Dispatch::where('status', 2)->where('user_id', $user_id)->with('user')->orderBy('updated_at','desc')->get();
 
+        $req_dispatch = Request::where('user_id', session('user_id'))->orderBy('created_at','desc')->first();
+        if ( isset($req_dispatch->status) && $req_dispatch->status == 0){
+            $altsts_req = Request::where('user_id', session('user_id'))->where('status', 0)->first();
+            $altsts_req->status = 1;
+            $altsts_req->save();
+        }
+
         $dados = [
+            'req' => $req_dispatch,
             'dispatch' => $dispatch,
             'title'    => 'Despacho - Histórico',
+
         ];
 
         return view('user_history',$dados);

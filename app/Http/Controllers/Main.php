@@ -98,6 +98,12 @@ public function login(){
 //==========================================================================
 public function logout(){
 
+    if (session('profile') == 0 ) {
+        $req = Request::where('user_id', session('user_id'))->where('status', 1)->where('created_at','<', date('Y-m-d'))->get();
+        foreach ($req as $req){
+            $req->delete();
+        }
+    }
     session()->flush();
     return redirect()->route('index');
 

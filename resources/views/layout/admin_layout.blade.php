@@ -153,7 +153,7 @@
 
    <footer>
     <div class="copyright">
-        &copy;Dispatch 2021 (v1.1) <br>
+        &copy;Dispatch 2021 (v2.0) <br>
         Desenvolvido por: Sgt Souza Lima e Cb Eduardo
     </div>
 </footer>
