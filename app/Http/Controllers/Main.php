@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use App\Models\Warning;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Request;
 
 class Main extends Controller
 {

@@ -4,6 +4,135 @@ html{
 
 }
 
+
+/* botao flutuante / user_layout */
+.b-b-1-g{
+    border-bottom: 1px solid #06a800;
+}
+
+.b-b-1{
+    border-bottom: 1px solid rgb(255, 255, 0);
+}
+
+.b-t-1{
+    border-top: 1px solid rgb(255, 255, 0);
+}
+
+.alert_default_g
+  {
+   width:360px;
+   color: #FFFFFF;
+   background-color: rgba(0, 0, 0);
+   border:2px solid #06a800;
+   height: auto;
+   padding: 10px;
+}
+
+.alert_default
+  {
+   width:360px;
+   color: #FFFFFF;
+   background-color: rgba(0, 0, 0);
+   border:2px solid rgb(255, 255, 0);
+   height: auto;
+   padding: 10px;
+}
+
+.fab{
+  position: fixed;
+  bottom:30px;
+  right:50px;
+  z-index: 10;
+}
+
+.fab button{
+  cursor: pointer;
+  height: auto;
+  border-radius: 30px;
+  background-color:  rgb(207, 207, 0);
+  border: none;
+  box-shadow: 0 1px 5px rgba(0,0,0,.4);
+  font-size: 30px;
+  color: rgb(0, 0, 0);
+
+  -webkit-transition: .2s ease-out;
+  -moz-transition: .2s ease-out;
+  transition: .2s ease-out;
+}
+
+.fab button:focus{
+  outline: none;
+}
+
+.fab button.main{
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 0);
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+}
+
+.fab button.main:before{
+  content: '✉';
+}
+
+.fab ul{
+  position:absolute;
+  bottom: 0;
+  right: 0;
+  padding:0;
+  padding-right:5px;
+  margin:0;
+  list-style:none;
+  z-index:10;
+
+  -webkit-transition: .2s ease-out;
+  -moz-transition: .2s ease-out;
+  transition: .2s ease-out;
+}
+
+.fab ul li{
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  margin-bottom: -10%;
+  opacity: 0;
+
+  -webkit-transition: .3s ease-out;
+  -moz-transition: .3s ease-out;
+  transition: .3s ease-out;
+}
+
+
+.fab.show button.main,
+.fab.show button.main{
+  outline: none;
+  background-color:  rgb(235, 235, 3);
+  box-shadow: 0 3px 8px rgba(0,0,0,.5);
+ }
+
+.fab.show button.main:before,
+.fab.show button.main:before{
+  content: '↑';
+}
+
+.fab.show button.main + ul,
+.fab.show button.main + ul{
+  bottom: 70px;
+}
+
+.fab.show button.main + ul li,
+.fab.show button.main + ul li{
+  margin-bottom: 10px;
+  opacity: 1;
+}
+
+
+/* ============================================= */
+
 .content{
     padding-bottom: 10em;
     -webkit-backface-visibility: hidden;

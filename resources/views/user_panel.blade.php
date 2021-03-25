@@ -95,4 +95,26 @@
         </div>
     </div>
 </div>
+{{-- =======================================AVISO DO CMT============================================ --}}
+
+@if (!empty($warning))
+<div class="modal fade show" id="info_user" aria-labelledby="modal" style="display: block;" aria-modal="true" role="dialog">
+    <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="c-b modal-title" id="info_user">AVISO DO COMANDANTE</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="hide()" aria-label="Close"></button>
+            </div>
+            <div class="c-b fs-13 modal-body">
+               <h1 class="fs-20">{{ $warning }}</h1><br>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onclick="hide()">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id='backdrop' class="modal-backdrop fade show"></div>
+ @endif
 @endsection

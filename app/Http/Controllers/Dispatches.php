@@ -83,14 +83,24 @@ public function panel(){
     $fila = Dispatch::where('id', '<=', $dispatch[0]->id)->where('status', 0)->count();
     }
 
+    $req_dispatch = Request::where('user_id', session('user_id'))->orderBy('created_at','desc')->first();
+
+    if ( isset($req_dispatch->status) && $req_dispatch->status == 0){
+        $altsts_req = Request::where('user_id', session('user_id'))->where('status', 0)->first();
+        $altsts_req->status = 1;
+        $altsts_req->save();
+    }
+
     $dados = [
         'warning' => session('warning'),
         'status' => $status,
         'dispatch' => $dispatch,
         'fila' => $fila,
+        'req' => $req_dispatch,
         'erro' => session('erro'),
         'title'    => 'Despacho - Home',
     ];
+
 
     return view('user_panel',$dados);
 }
@@ -203,12 +213,20 @@ public function panel(){
 
 //=============================[require_dispatch]===========================
     public function require_dispatch(ReqDispatchCmtRequest $request){
+        $request->validated();
         $user    = $request->input('user');
         $message = $request->input('message');
         $email   = $request->input('email');
         if(empty($email)){
             $email = 0;
         }
+
+        $check_req = Request::where('user_id', $user)->where('status', 0)->first();
+        if($check_req){
+            session()->flash('erro','Este usuário tem uma solicitação não visualizada.');
+            return back();
+         }
+
 
         $require = new Request;
         $require->user_id = $user;
@@ -223,7 +241,7 @@ public function panel(){
             ];
             $this->Email->cmt_message($info);
         }
-        session()->flash('erro','Requerimento enviado com sucesso+');
+        session()->flash('erro','Requerimento enviado com sucesso.');
 
         return back();
     }

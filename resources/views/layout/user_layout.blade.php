@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-       
+
     @if ( !empty($dispatch[0]->status) && $dispatch[0]->status == 1)
-       <title>Chegou a sua vez desloque-se até a sala do comandante &nbsp&nbsp</title> 
-        <script src="{{ asset('js/title-effect.js') }}"></script>  
-        
+       <title>Chegou a sua vez desloque-se até a sala do comandante &nbsp&nbsp</title>
+        <script src="{{ asset('js/title-effect.js') }}"></script>
+
     @else
         <title>{{ $title }}</title>
     @endif
@@ -70,9 +70,45 @@
        @yield('content')
     </div>
 
+
+{{-- ============================================Botão flutuante========================================= --}}
+@if (isset($req->status) && $req->status == 0)
+    <div class="fab show">
+@else
+    <div class="fab">
+@endif
+
+    <button alt="Mensagem do comandante" class="main"></button>
+    <ul>
+        @if (isset($req->status) && $req->status == 0)
+            <li>
+                <div class="alert alert_default_g">
+                    <p class="m-t-1 fs-12 b-b-1-g"><strong>&nbsp&nbsp Mensagem do comandante (NOVA)</strong></p>
+                    <p class="fs-15 m-t-10 m-b-10 m-l-10">- {{ $req->message }}</p>
+                    <p class="fs-12 float-end b-b-1-g"><strong> {{ date( 'd F Y  h:m' , strtotime($req->created_at)) }}</strong></p>
+                </div>
+            </li>
+        @elseif (isset($req->status) && $req->status == 1)
+            <li>
+                <div class="alert alert_default">
+                    <p class="m-t-1 fs-12 b-b-1"><strong>&nbsp&nbsp Mensagem do comandante</strong></p>
+                    <p class="fs-15 m-t-10 m-b-10 m-l-10">- {{ $req->message }}</p>
+                    <p class="fs-12 float-end b-b-1"><strong> {{ date( 'd F Y  h:m' , strtotime($req->created_at)) }}</strong></p>
+                </div>
+            </li>
+        @else
+            <li>
+                <div class="alert alert_default">
+                    <p class="fs-15 m-t-10 m-b-10 m-l-10">- Não há mensagens</p>
+                </div>
+            </li>
+        @endif
+    </ul>
+</div>
+{{-- =================================================================================================== --}}
+
     {{-- MODALS --}}
     @yield('modal')
-
 
 {{-- ===================================Modal SENHA====================================================== --}}
 <div class="modal fade" id="atl_pwd" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
@@ -114,28 +150,8 @@
       </div>
     </div>
   </div>
-{{-- =======================================AVISO DO CMT============================================ --}}
 
-@if (!empty($warning))
-<div class="modal fade show" id="info_user" aria-labelledby="modal" style="display: block;" aria-modal="true" role="dialog">
-    <div class=" modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="c-b modal-title" id="info_user">AVISO DO COMANDANTE</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="hide()" aria-label="Close"></button>
-            </div>
-            <div class="c-b fs-13 modal-body">
-               <h1 class="fs-20">{{ $warning }}</h1><br>
-
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-danger" onclick="hide()">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div id='backdrop' class="modal-backdrop fade show"></div>
- @endif
+{{-- ============================================================================================================================= --}}
 
 
    <footer>
