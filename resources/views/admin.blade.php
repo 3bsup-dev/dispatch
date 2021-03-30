@@ -34,10 +34,10 @@
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">Posição</th>
-                                <th scope="col">P/G</th>
-                                <th scope="col">Nome</th>
+                                <th scope="col" width="60px">P/G</th>
+                                <th scope="col" width="150px">Nome</th>
                                 <th scope="col">Descrição</th>
-                                <th scope="col">Ações</th>
+                                <th scope="col"  width="150px">Ações</th>
                             </tr>
                         </thead>
 
@@ -68,8 +68,8 @@
                                         @endphp
 
                                         <th scope="row">{{ $i.'°' }}</th>
-                                        <td scope="row">{{ $dispatchs->user->pg}}</td>
-                                        <td scope="row">{{ $dispatchs->user->name}}</td>
+                                        <td scope="row" >{{ $dispatchs->user->pg}}</td>
+                                        <td scope="row" >{{ $dispatchs->user->name}}</td>
                                         <td scope="row">{{ $dispatchs->descripition }}</td>
                                         <td scope="row">
                                         <a href="{{ route('action_dispatch' , ['id_dispatch' => $dispatchs->id ,'action' => 1 ]) }}" class="btn btn-primary btn-sm" title="Chamar"><i class="fa fa-clipboard-check"></i></a>

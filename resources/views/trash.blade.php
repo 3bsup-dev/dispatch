@@ -19,12 +19,12 @@
 
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">Data / hora</th>
-                                <th scope="col">P/G</th>
-                                <th scope="col">Nome</th>
+                                <th scope="col" width="150px">Data / hora</th>
+                                <th scope="col" width="60px">P/G</th>
+                                <th scope="col" width="150px">Nome</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Ações</th>
-                                <th class=" text-end"  scope="col"> <a class="btn btn-danger btn-sm" href="{{ route('clean_trash') }}"><i class="fa fa-trash"></i> Esvaziar lixeira</a></th>
+                                <th class=" text-end"  scope="col" width="150px"> <a class="btn btn-danger btn-sm" href="{{ route('clean_trash') }}"><i class="fa fa-trash"></i> Esvaziar lixeira</a></th>
                             </tr>
                         </thead>
 

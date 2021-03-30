@@ -19,22 +19,22 @@
 
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">Data / hora</th>
-                                <th scope="col">P/G</th>
-                                <th scope="col">Nome</th>
+                                <th scope="col" width="150px">Data / hora</th>
+                                <th scope="col" width="60px">P/G</th>
+                                <th scope="col" width="150px">Nome</th>
                                 <th scope="col">Descrição</th>
-                                <th scope="col">Ações</th>
+                                <th scope="col" width="150px">Ações</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             @foreach($dispatch as $dispatchs)
                                     <tr>
-                                        <th scope="row">{{ date( 'd/m/Y  h:m' , strtotime($dispatchs->updated_at)) }}</th>
-                                        <td scope="row">{{ $dispatchs->user->pg}}</td>
+                                        <th scope="row" >{{ date( 'd/m/Y  h:m' , strtotime($dispatchs->updated_at)) }}</th>
+                                        <td scope="row" >{{ $dispatchs->user->pg}}</td>
                                         <td scope="row">{{ $dispatchs->user->name}}</td>
                                         <td scope="row">{{ $dispatchs->descripition }}</td>
-                                        <td scope="row">
+                                        <td scope="row" >
                                         <a class="btn btn-secondary btn-sm" title="Chamar"><i class="fa fa-clipboard-check"></i></a>
                                         <a class="btn btn-secondary btn-sm" title="Despachado"><i class="fa fa-check"></i></a>
                                         <a href="{{ route('action_dispatch' , ['id_dispatch' => $dispatchs->id ,'action' => 4 ]) }}" class="btn btn-danger btn-sm" title="Apagar"><i class="fa fa-trash"></i></a>

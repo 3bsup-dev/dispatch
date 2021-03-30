@@ -36,11 +36,11 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => 'smtp.1cta.eb.mil.br',
+            'host' => 'lugia.1cta.eb.mil.br',
             'port' => 587,
             'encryption' => 'TLS',
-            'username' => 'eduardom@3bsup.eb.mil.br',
-            'password' => 'Eduardo3386',
+            'username' => 'gabcmt@3bsup.eb.mil.br',
+            'password' => 'Se6edres',
             'timeout' => null,
             'auth_mode' => null,
         ],
@@ -58,7 +58,7 @@ return [
     */
 
     'from' => [
-        'address' => 'eduardom@3bsup.eb.mil.br',
+        'address' => 'gabcmt@3bsup.eb.mil.br',
         'name' => 'Despacho - 3º B Sup',
     ],
 
