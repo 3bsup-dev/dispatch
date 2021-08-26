@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'http://despacho.3bsup.eb.mil.br',
 
     'asset_url' => null,
 
@@ -119,7 +119,7 @@ return [
     |
     */
 
-    'key' => 'base64:eRt43zNQoU3YSMOceSjDTI7uSiH6C5cgLLq7GiO18/4=',
+    'key' => 'base64:dq/qEqnKcXTEfvXbJ9WPuVw7C08pGbxYMVe3oTDyeDk=',
 
     'cipher' => 'AES-256-CBC',
 

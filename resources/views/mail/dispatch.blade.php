@@ -148,7 +148,7 @@
             </table>
             <table width="640" border="0" cellspacing="0" cellpadding="10" bgcolor="#ffffff" class="100p">
                 <tr>
-                    <td align="center"  width="402" style="font-size:16px; color:#848484;"><font face="'Roboto', Arial, sans-serif"><span style="color:#2a9d47; font-size:24px;">Prezado(a) Sr(a). {{ $info->user->name }}</span>
+                    <td align="center"  width="402" style="font-size:16px; color:#848484;"><font face="'Roboto', Arial, sans-serif"><span style="color:#2a9d47; font-size:24px;">Prezado(a) Sr(a). {{ $info->user->professionalName }}</span>
                         </font>
                     </td>
                 </tr>

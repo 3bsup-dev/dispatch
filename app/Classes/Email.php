@@ -6,6 +6,7 @@ use App\Mail\CmtReqDispatchMail;
 use App\Mail\InfoLoginMail;
 use App\Mail\DispatchMail;
 use App\Mail\WarningMail;
+use App\Models\LoginApplicationModel;
 use App\Models\Warning;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -16,26 +17,23 @@ class Email
     public function queue_dispatch($info){
         Mail::to( $info->user->email)->send(new DispatchMail($info));
     }
-//=============================[Info_login]==========================================
-    public function info_login($info){
-        Mail::to($info['email'])->send(new InfoLoginMail($info));
-    }
 //=============================[Warning]=============================================
     public function warnings($info){
-        $users = User::where('notification', 1)->get();
+        $users = LoginApplicationModel::with('user')->where('notification', 1)->where('applications_id', 1)->get();
+
             foreach($users as $user){
-                if (!empty($user->email)) {
-                    $info['name'] = $user->name;
-                    Mail::to($user->email)->send(new WarningMail($info));
+                if (!empty($user->user->email)) {
+                    $info['name'] = $user->user->professionalName;
+                    Mail::to($user->user->email)->send(new WarningMail($info));
                 }
             }
     }
 //=============================[Cmt Request Dispatch]=================================
     public function cmt_message($info){
-        $user = User::find($info['user']);
-            if (!empty($user->email && $user->notification == 1)) {
-                $info['name'] = $user->name;
-                Mail::to($user->email)->send(new CmtReqDispatchMail($info));
+           $user = LoginApplicationModel::with('user')->where('login_id', $info['user'])->first();
+            if (!empty($user->user->email && $user->notification == 1)) {
+                $info['name'] = $user->user->professionalName;
+                Mail::to($user->user->email)->send(new CmtReqDispatchMail($info));
             }
     }
 //=============================[]======================================

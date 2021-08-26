@@ -31,9 +31,9 @@
                             @foreach($dispatch as $dispatchs)
                                     <tr>
                                         <th scope="row" >{{ date( 'd/m/Y  h:m' , strtotime($dispatchs->updated_at)) }}</th>
-                                        <td scope="row" >{{ $dispatchs->user->pg}}</td>
-                                        <td scope="row">{{ $dispatchs->user->name}}</td>
-                                        <td scope="row">{{ $dispatchs->descripition }}</td>
+                                         <td scope="row">{{ $dispatchs->user->rank->rankAbbreviation }}</td>
+                                            <td scope="row">{{ $dispatchs->user->professionalName }}</td>
+                                            <td scope="row">{{ $dispatchs->descripition }}</td>
                                         <td scope="row" >
                                         <a class="btn btn-secondary btn-sm" title="Chamar"><i class="fa fa-clipboard-check"></i></a>
                                         <a class="btn btn-secondary btn-sm" title="Despachado"><i class="fa fa-check"></i></a>

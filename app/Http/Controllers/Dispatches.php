@@ -8,35 +8,29 @@ use App\Models\Dispatch;
 use App\Models\Warning;
 use App\Classes\Email;
 use App\Http\Requests\ReqDispatchCmtRequest;
+use App\Models\LoginApplicationModel;
 use App\Models\Request;
 use App\Models\User;
 
 class Dispatches extends Controller
 {
-//=======================[Email]===================
+    //=======================[Email]===================
     private $Email;
     public function __construct()
     {
         $this->Email = new Email();
     }
 
-//=============================[admin]======================================
-    public function admin(){
+    //=============================[admin]======================================
+    public function admin()
+    {
 
-        //Verifica se o usuário esta logado
-         if(!session()->has('user')){
-             return redirect()->route('login');
-         }
-         if(!session('profile') == 1){
-            return redirect()->route('index');
-         }
-
-        $dispatch = Dispatch::where('status','<=', 1)->with('user')->orderBy('created_at','asc')->get();
+        $dispatch = Dispatch::where('status', '<=', 1)->with('user')->orderBy('created_at', 'asc')->get();
         $status = Warning::all()->first();
-        $users = User::where('profile', 0)->orderBy('name')->get();
+        $users = LoginApplicationModel::with('user')->where('applications_id', 1)->get();
 
 
-         $dados = [
+        $dados = [
             'erro' => session('erro'),
             'status'   => $status,
             'dispatch' => $dispatch,
@@ -45,187 +39,151 @@ class Dispatches extends Controller
         ];
 
         $i = 0;
-        foreach($dispatch as $dispatch){
-            $i= $i; $i++;
-            if($dispatch->notification == 0 && $dispatch->status == 0){session()->put('queue', 1);}
-            if($i <= 2 && !empty($dispatch->user->email) && $dispatch->notification == 1 && $dispatch->status == 0 &&  session('queue') != 1){
+        foreach ($dispatch as $dispatch) {
+            $i = $i;
+            $i++;
+            if ($dispatch->notification == 0 && $dispatch->status == 0) {
+                session()->put('queue', 1);
+            }
+            if ($i <= 2 && !empty($dispatch->user->email) && $dispatch->notification == 1 && $dispatch->status == 0 &&  session('queue') != 1) {
                 $dispatch->notification = 2;
                 $dispatch->save();
                 $this->Email->queue_dispatch($dispatch);
             }
-            if(!empty($dispatch->user->email) && $dispatch->status == 1 && $dispatch->notification >= 1 && $dispatch->notification < 3){
-                    $dispatch->notification = 3;
-                    $dispatch->save();
-                    $this->Email->queue_dispatch($dispatch);
-                    session()->put('queue', 0);
+            if (!empty($dispatch->user->email) && $dispatch->status == 1 && $dispatch->notification >= 1 && $dispatch->notification < 3) {
+                $dispatch->notification = 3;
+                $dispatch->save();
+                $this->Email->queue_dispatch($dispatch);
+                session()->put('queue', 0);
             }
         }
-        return view('admin',$dados);
-      }
-
-
-
-//=============================[panel_user]=================================
-public function panel(){
-    //Verifica se o usuário esta logado
-    if(!session()->has('user')){
-        return redirect()->route('login');
-    }
-    if(!session('profile') == 0){
-       return redirect()->route('index');
+        return view('admin', $dados);
     }
 
-    $status = Warning::all()->first();
-    $user_id = session('user_id');
-    $dispatch = Dispatch::where('user_id', $user_id)->where('status', '<=', 1)->get();
-    $fila = 0;
-    if(isset($dispatch[0])){
-    $fila = Dispatch::where('id', '<=', $dispatch[0]->id)->where('status', 0)->count();
-    }
-
-    $req_dispatch = Request::where('user_id', session('user_id'))->orderBy('created_at','desc')->first();
-
-    if ( isset($req_dispatch->status) && $req_dispatch->status == 0){
-        $altsts_req = Request::where('user_id', session('user_id'))->where('status', 0)->first();
-        $altsts_req->status = 1;
-        $altsts_req->save();
-    }
-
-    $dados = [
-        'warning' => session('warning'),
-        'status' => $status,
-        'dispatch' => $dispatch,
-        'fila' => $fila,
-        'req' => $req_dispatch,
-        'erro' => session('erro'),
-        'title'    => 'Despacho - Home',
-    ];
 
 
-    return view('user_panel',$dados);
-}
-//=============================[action_dispatch]============================
-      public function action_dispatch($id_dispatch,$action){
+    //=============================[panel_user]=================================
+    public function panel()
+    {
 
-         //Verifica se o usuário esta logado
-         if(!session()->has('user')){
-            return redirect()->route('login');
-        }
-        if(!session('profile') == 1){
-           return redirect()->route('index');
+        $status = Warning::all()->first();
+        $user_id = session('user')['id'];
+        $dispatch = Dispatch::where('user_id', $user_id)->where('status', '<=', 1)->get();
+        $fila = 0;
+        if (isset($dispatch[0])) {
+            $fila = Dispatch::where('id', '<=', $dispatch[0]->id)->where('status', 0)->count();
         }
 
-        if($action == 1){
+        $req_dispatch = Request::where('user_id', session('user')['id'])->orderBy('created_at', 'desc')->first();
+
+        if (isset($req_dispatch->status) && $req_dispatch->status == 0) {
+            $altsts_req = Request::where('user_id', session('user')['id'])->where('status', 0)->first();
+            $altsts_req->status = 1;
+            $altsts_req->save();
+        }
+
+        $dados = [
+            'warning' => session('warning'),
+            'status' => $status,
+            'dispatch' => $dispatch,
+            'fila' => $fila,
+            'req' => $req_dispatch,
+            'erro' => session('erro'),
+            'title'    => 'Despacho - Home',
+        ];
+
+
+        return view('user_panel', $dados);
+    }
+    //=============================[action_dispatch]============================
+    public function action_dispatch($id_dispatch, $action)
+    {
+        if ($action == 1) {
             $check_status = Dispatch::where('status', 1)->first();
 
-            if($check_status){
-            session()->flash('erro','Não pode haver dois militares despachando finalize o despacho antes de chamar o proximo.');
-            return redirect()->route('admin');
+            if ($check_status) {
+                session()->flash('erro', 'Não pode haver dois militares despachando finalize o despacho antes de chamar o proximo.');
+                return redirect()->route('admin');
             }
         }
-
 
         $dispatch = Dispatch::find($id_dispatch);
 
-        if($action == 1 || $action == 2){
+        if ($action == 1 || $action == 2) {
             session()->forget('queue');
             $dispatch->status = $action;
             $dispatch->save();
-        }elseif($action == 3){
+        } elseif ($action == 3) {
             $dispatch->delete();
-            if($dispatch->status == 0){
+            if ($dispatch->status == 0) {
                 session()->forget('queue');
             }
-        }elseif($action == 4){
+        } elseif ($action == 4) {
             $dispatch->delete();
-        }elseif($action == 6){
+        } elseif ($action == 6) {
             $restore = Dispatch::withTrashed()->find($id_dispatch);
             $restore->deleted_at = null;
             $restore->save();
         }
 
         return back();
-      }
-//=============================[Historico]==================================
-    public function history_dispatch(){
+    }
+    //=============================[Historico]==================================
+    public function history_dispatch()
+    {
+        $dispatch = Dispatch::where('status', 2)->with('user')->orderBy('updated_at', 'desc')->get();
+        //$dispatch = Dispatch::withTrashed()->with('user')->orderBy('updated_at','desc')->get();
+        $status = Warning::all()->first();
+        $dados = [
+            'status' => $status,
+            'dispatch' => $dispatch,
+            'title'    => 'Despacho - Histórico',
+        ];
 
-    //Verifica se o usuário esta logado
-     if(!session()->has('user')){
-         return redirect()->route('login');
-     }
-     if(!session('profile') == 1){
-        return redirect()->route('index');
-     }
+        return view('history', $dados);
+    }
+    //=============================[trash_dispatch]=============================
+    public function trash_dispatch()
+    {
+        $dispatch = Dispatch::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
+        $status = Warning::all()->first();
+        $dados = [
+            'status' => $status,
+            'dispatch' => $dispatch,
+            'title'    => 'Despacho - Lixeira',
+        ];
 
-    $dispatch = Dispatch::where('status', 2)->with('user')->orderBy('updated_at','desc')->get();
-    //$dispatch = Dispatch::withTrashed()->with('user')->orderBy('updated_at','desc')->get();
-    $status = Warning::all()->first();
-     $dados = [
-        'status' => $status,
-        'dispatch' => $dispatch,
-        'title'    => 'Despacho - Histórico',
-    ];
+        return view('trash', $dados);
+    }
+    //=============================[clean_trash]================================
+    public function clean_trash()
+    {
+        $trash = Dispatch::onlyTrashed()->get();
 
-     return view('history',$dados);
-  }
-//=============================[trash_dispatch]=============================
-    public function trash_dispatch(){
+        foreach ($trash as $dispatch) {
 
-    //Verifica se o usuário esta logado
-     if(!session()->has('user')){
-         return redirect()->route('login');
-     }
-     if(!session('profile') == 1){
-        return redirect()->route('index');
-     }
+            $dispatch->forceDelete();
+        }
 
-    $dispatch = Dispatch::onlyTrashed()->orderBy('deleted_at','desc')->get();
-    $status = Warning::all()->first();
-    $dados = [
-        'status' => $status,
-        'dispatch' => $dispatch,
-        'title'    => 'Despacho - Lixeira',
-    ];
-
-     return view('trash',$dados);
-  }
-//=============================[clean_trash]================================
-    public function clean_trash(){
-
-    //Verifica se o usuário esta logado
-     if(!session()->has('user')){
-         return redirect()->route('login');
-     }
-     if(!session('profile') == 1){
-        return redirect()->route('index');
-     }
-
-    $trash = Dispatch::onlyTrashed()->get();
-
-    foreach ($trash as $dispatch){
-
-        $dispatch->forceDelete();
-
+        return back();
     }
 
-    return back();
-  }
-
-//=============================[require_dispatch]===========================
-    public function require_dispatch(ReqDispatchCmtRequest $request){
+    //=============================[require_dispatch]===========================
+    public function require_dispatch(ReqDispatchCmtRequest $request)
+    {
         $request->validated();
         $user    = $request->input('user');
         $message = $request->input('message');
         $email   = $request->input('email');
-        if(empty($email)){
+        if (empty($email)) {
             $email = 0;
         }
 
         $check_req = Request::where('user_id', $user)->where('status', 0)->first();
-        if($check_req){
-            session()->flash('erro','Este usuário tem uma solicitação não visualizada.');
+        if ($check_req) {
+            session()->flash('erro', 'Este usuário tem uma solicitação não visualizada.');
             return back();
-         }
+        }
 
 
         $require = new Request;
@@ -234,41 +192,34 @@ public function panel(){
         $require->status = 0;
         $require->save();
 
-        if($email == 1){
+        if ($email == 1) {
             $info = [
                 'message' => $message,
                 'user' => $user,
             ];
             $this->Email->cmt_message($info);
         }
-        session()->flash('erro','Requerimento enviado com sucesso.');
+        session()->flash('erro', 'Requerimento enviado com sucesso.');
 
         return back();
     }
-//=============================[request_dispatch]===========================
-    public function request_dispatch(ReqDispatchRequest $request){
-         //Verifica se o usuário esta logado
-         if(!session()->has('user')){
-            return redirect()->route('login');
-        }
-        if(!session('profile') == 0){
-           return redirect()->route('index');
-        }
-
+    //=============================[request_dispatch]===========================
+    public function request_dispatch(ReqDispatchRequest $request)
+    {
         $check_sts_cmt = Warning::all()->first();
-        if($check_sts_cmt->status_dispatch == 1){
-            session()->flash('erro','O comandante não está recebendo despacho no momento.');
+        if ($check_sts_cmt->status_dispatch == 1) {
+            session()->flash('erro', 'O comandante não está recebendo despacho no momento.');
             return redirect()->route('panel');
         }
         $request->validated();
         $descripition = $request->input('descripition');
         $notification = $request->input('notification');
-        if(empty($notification)){
+        if (empty($notification)) {
             $notification = 0;
         }
 
         $dispatch = new Dispatch;
-        $dispatch->user_id = session('user_id');
+        $dispatch->user_id = session('user')['id'];
         $dispatch->descripition = $descripition;
         $dispatch->notification = $notification;
         $dispatch->status = 0;
@@ -276,19 +227,12 @@ public function panel(){
 
         return redirect()->route('panel');
     }
-//=============================[cancel_dispatch]============================
-    public function cancel_dispatch(){
-         //Verifica se o usuário esta logado
-        if(!session()->has('user')){
-            return redirect()->route('login');
-        }
-        if(!session('profile') == 0){
-           return redirect()->route('index');
-        }
+    //=============================[cancel_dispatch]============================
+    public function cancel_dispatch()
+    {
+        $user_id = session('user')['id'];
 
-        $user_id = session('user_id');
-
-        $dispatch = Dispatch::where('user_id', $user_id)->where('status','<=',1)->get();
+        $dispatch = Dispatch::where('user_id', $user_id)->where('status', '<=', 1)->get();
 
         if (isset($dispatch[0])) {
             $dispatch[0]->delete();
@@ -297,23 +241,15 @@ public function panel(){
 
         return redirect()->route('panel');
     }
-//=============================[user_history]=============================
-    public function user_history(){
+    //=============================[user_history]=============================
+    public function user_history()
+    {
+        $user_id = session('user')['id'];
+        $dispatch = Dispatch::where('status', 2)->where('user_id', $user_id)->with('user')->orderBy('updated_at', 'desc')->get();
 
-        //Verifica se o usuário esta logado
-        if(!session()->has('user')){
-            return redirect()->route('login');
-        }
-        if(!session('profile') == 0){
-            return redirect()->route('index');
-        }
-
-        $user_id = session('user_id');
-        $dispatch = Dispatch::where('status', 2)->where('user_id', $user_id)->with('user')->orderBy('updated_at','desc')->get();
-
-        $req_dispatch = Request::where('user_id', session('user_id'))->orderBy('created_at','desc')->first();
-        if ( isset($req_dispatch->status) && $req_dispatch->status == 0){
-            $altsts_req = Request::where('user_id', session('user_id'))->where('status', 0)->first();
+        $req_dispatch = Request::where('user_id', session('user')['id'])->orderBy('created_at', 'desc')->first();
+        if (isset($req_dispatch->status) && $req_dispatch->status == 0) {
+            $altsts_req = Request::where('user_id', session('user')['id'])->where('status', 0)->first();
             $altsts_req->status = 1;
             $altsts_req->save();
         }
@@ -325,6 +261,6 @@ public function panel(){
 
         ];
 
-        return view('user_history',$dados);
+        return view('user_history', $dados);
     }
 }

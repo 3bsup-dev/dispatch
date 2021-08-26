@@ -12,100 +12,33 @@ use App\Models\Request;
 
 class Main extends Controller
 {
-   //===================================INDEX==================================
-   public function index(){
-
-    //Verifica se o usuário esta logado
-    if(session()->has('user')){
-        if (session('profile') == 1) {
-            return redirect()->route('admin');
+    //===================================INDEX==================================
+    public function index()
+    {
+        //Verifica se o usuário esta logado
+        if (session()->has('Despacho')) {
+            if (session('Despacho')['profileType'] == 1) {
+                return redirect()->route('admin');
+            } elseif (session('Despacho')['profileType'] == 0) {
+                $warning = Warning::all()->first();
+                session()->flash('warning', $warning->warning);
+                return redirect()->route('panel');
+            }
         } else {
-            $warning = Warning::all()->first();
-            session()->flash('warning' ,$warning->warning);
-            return redirect()->route('panel');
-        }
-    }else{
-        return redirect()->route('login');
-    }
-}
-//===========================================================================
-
-
-
-
-//============================================================================
-public function login(){
-
-    //Verifica se o usuário esta logado
-    if(session()->has('user')){
-        return redirect()->route('index');
-    }
-
-    $erro = session('erro');
-    $data = [];
-    if(!empty($erro)){
-        $data = [
-            'erro' => $erro,
-        ];
-    }
-
-     //Apresenta o formulario de login
-     return view('login', $data);
-
-   }
-
-//======================================================================
-   public function login_submit(LoginRequest $request){
-
-     //Validação
-    $request->validated();// Caso exista um erro no formulario ele vezifica e retorna uma mensagem de erro
-
-
-    //Verificar dados de login
-    $login = trim($request->input('login'));//O trim() remove espaços das laterais que podem ter sidos colocados por acidente
-    $password = trim($request->input('password'));//Buscando dados do input
-
-    $user = User::where('login', $login)->first();//Procurando se na coluna usuario existe tal user e pegando o primeiro da lista
-
-    if(!$user){//Se não existe $x
-       session()->flash('erro','Este usuário não existe.');
-       return redirect()->route('login');
-    }
-
-     //Verifica se a senha ta correta
-    if(!Hash::check($password, $user->password)){
-
-        session()->flash('erro','Senha incorreta.');
-        return redirect()->route('login');
-    }
-
-      //Inicia uma sessao
-
-      session()->put([
-          'profile' => $user->profile,
-          'user'    => $user->login,
-          'name'    => $user->name,
-          'pg'      => $user->pg,
-          'user_id' => $user->id,
-          'email'   => $user->email
-      ]);
-
-
-     return redirect()->route('index');
-
-
-  }
-//==========================================================================
-public function logout(){
-
-    if (session('profile') == 0 ) {
-        $req = Request::where('user_id', session('user_id'))->where('status', 1)->where('created_at','<', date('Y-m-d'))->get();
-        foreach ($req as $req){
-            $req->delete();
+            return redirect('http://sistao.3bsup.eb.mil.br');
         }
     }
-    session()->flush();
-    return redirect()->route('index');
+//=========================================================================
+    public function logout()
+    {
+        if (session('profile') == 0) {
+            $req = Request::where('user_id', session('user_id'))->where('status', 1)->where('created_at', '<', date('Y-m-d'))->get();
+            foreach ($req as $req) {
+                $req->delete();
+            }
+        }
+        session()->forget('Despacho');
 
-}
+        return redirect('http://sistao.3bsup.eb.mil.br');
+    }
 }

@@ -6,6 +6,7 @@ use App\Classes\Email;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WarningRequest;
 use App\Models\Dispatch;
+use App\Models\LoginApplicationModel;
 use App\Models\Warning;
 use Illuminate\Http\Request;
 
@@ -19,15 +20,6 @@ class Warnings extends Controller
     }
 //=======================[status_dispatch]===========================================
     public function status_dispatch($status_dispatch){
-
-        //Verifica se o usuário esta logado
-        if(!session()->has('user')){
-            return redirect()->route('login');
-        }
-        if(!session('profile') == 1){
-        return redirect()->route('index');
-        }
-
         $check_warning = Warning::all()->first();
 
         if(isset($check_warning)){
@@ -42,12 +34,8 @@ class Warnings extends Controller
             $warning = new Warning;
             $warning->status_dispatch = $status_dispatch;
             $warning->save();
-
             return redirect()->route('admin');
         }
-
-
-
     }
 //=======================[warning]===========================================
     public function warning(WarningRequest $request){
@@ -58,14 +46,6 @@ class Warnings extends Controller
        $status = $request->input('status');
        $clean = $request->input('clean');
        $notification = $request->input('notification');
-
-        //Verifica se o usuário esta logado
-        if(!session()->has('user')){
-            return redirect()->route('login');
-        }
-        if(!session('profile') == 1){
-        return redirect()->route('index');
-        }
 
         if($clean == 1){
             $dispatchs = Dispatch::where('status','<=',1)->get();
